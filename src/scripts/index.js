@@ -1,3 +1,9 @@
+import "../styles/index.css"
+import { changeTheme } from "./changeTheme.js"
+import { createButton, formatNumber } from './helperFuncs.js'
+
+document.querySelector('#btnChangeTheme').addEventListener('click', changeTheme)
+
 const stopwatch = {
     display_hours: document.querySelector('#hour'),
     display_minutes: document.querySelector('#minutes'),
@@ -12,7 +18,7 @@ const stopwatch = {
     isCounting: false,
     isPaused: false,
 
-    init_couting: () => {
+    init_couting(){
         stopwatch.isCounting = true
         stopwatch.update_buttons()
         stopwatch.interval = setInterval(() => {
@@ -22,14 +28,14 @@ const stopwatch = {
         }, 10);
     },
     
-    pause_couting: () => {
+    pause_couting(){
         clearInterval(stopwatch.interval)
         stopwatch.isCounting = false
         stopwatch.isPaused = true
         stopwatch.update_buttons()
     },
 
-    reset_couting: () => {
+    reset_couting(){
         stopwatch.pause_couting()
         stopwatch.isPaused = false
         stopwatch.update_buttons()
@@ -37,7 +43,7 @@ const stopwatch = {
         stopwatch.update_display()
     },
 
-    update_buttons: () => {
+    update_buttons(){
         stopwatch.buttons.innerText = ''
         if(stopwatch.isCounting){
             stopwatch.buttons.append(createButton("pause"), createButton("reset"))
@@ -63,7 +69,7 @@ const stopwatch = {
         }
     },
 
-    update_display: () => {
+    update_display() {
         let hundredths = stopwatch.counter % 100
         stopwatch.display_hundredths.innerText = formatNumber(hundredths)
 
@@ -78,16 +84,7 @@ const stopwatch = {
     }
 }
 
-function createButton(className){
-    let button = document.createElement("button")
-    button.classList.add(className)
-    button.classList.add('btn')
-    button.innerText = className
 
-    return button
-}
 
-function formatNumber(number){
-    return number.toString().padStart(2, '0');
-}
+
 stopwatch.update_buttons()
